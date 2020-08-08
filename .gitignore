@@ -1,0 +1,5 @@
+*.pyc
+env/
+foto/
+media/
+*.sqlite3
