@@ -25,7 +25,7 @@ SECRET_KEY = 'acl%%9$cvk&!g4@_q%r_sd1p7x726zo)nvr7gk=$ky*+m#dibu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.232.35.60', 'ec2-54-232-35-60.sa-east-1.compute.amazonaws.com']
+ALLOWED_HOSTS = ['54.166.143.130', 'ec2-54-166-143-130.compute-1.amazonaws.com']
 
 # Application definition
 INSTALLED_APPS = [
