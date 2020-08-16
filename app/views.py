@@ -649,6 +649,7 @@ class PerfilAPi(APIView):
             fecha_nacimiento = request.data.get('fechaNacimiento')
             #descripcion = request.data.get('descripcion')
             imagen = request.data.get('imagen')
+            arrendador = request.data.get('arrendador')
             #foto = request.data.get('image')
 
             usuario = Usuario.objects.get(id=id)
@@ -663,6 +664,7 @@ class PerfilAPi(APIView):
             
             usuario.nombre = nombre
             usuario.apellido = apellido
+            usuario.arrendador = arrendador
             if genero == 0:
                 usuario.genero = 'H'
             else:
