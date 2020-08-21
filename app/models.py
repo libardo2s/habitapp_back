@@ -90,6 +90,7 @@ class Inmueble(models.Model):
 class Fotos(models.Model):
     fotos = models.ImageField('Foto', upload_to='foto')
     inmuebleFoto = models.ForeignKey(Inmueble, on_delete=models.CASCADE)
+    estado = models.BooleanField(default=True)
 
     def __str__(self):
         return self.inmuebleFoto.direccion

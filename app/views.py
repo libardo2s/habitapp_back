@@ -425,7 +425,7 @@ class album(APIView):
                 'message': '',
             }
         else:
-            album = Fotos.objects.filter(inmuebleFoto__id=id)  # Filtra una lista por id
+            album = Fotos.objects.filter(inmuebleFoto__id=id, estado=True)  # Filtra una lista por id
             dato = FotosSerializer(album, many=True)
             response = {
                 'content': dato.data,
@@ -433,7 +433,26 @@ class album(APIView):
                 'message': '',
             }
         return Response(response, status=status.HTTP_200_OK)
+    
+    def delete(self, request, id=None, format=None):
+        try:
 
+            if id in not None:
+                foto = Fotos.objects.get(id=id)
+                foto.estado = False
+                response = {
+                'content': [],
+                'isOk': False,
+                'message': Imagen eliminada correctamente,
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            response = {
+                'content': [],
+                'isOk': False,
+                'message': str(e),
+            }
+            return Response(response, status=status.HTTP_200_OK)
 
 class Solicitud(APIView):
     def get(self, request, id=None, format=None):
