@@ -437,7 +437,7 @@ class album(APIView):
     def delete(self, request, id=None, format=None):
         try:
 
-            if id in not None:
+            if id is not None:
                 foto = Fotos.objects.get(id=id)
                 foto.estado = False
                 response = {
