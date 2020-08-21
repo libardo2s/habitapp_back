@@ -440,6 +440,7 @@ class album(APIView):
             if id is not None:
                 foto = Fotos.objects.get(id=id)
                 foto.estado = False
+                foto.save()
                 response = {
                 'content': [],
                 'isOk': False,
