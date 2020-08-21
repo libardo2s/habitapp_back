@@ -443,7 +443,7 @@ class album(APIView):
                 response = {
                 'content': [],
                 'isOk': False,
-                'message': Imagen eliminada correctamente,
+                'message': 'Imagen eliminada correctamente',
             }
             return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
