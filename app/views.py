@@ -434,6 +434,36 @@ class album(APIView):
             }
         return Response(response, status=status.HTTP_200_OK)
     
+    def put(self, request, id=None, format=None):
+        try:
+            images = request.data.get('fotos')
+            if id is not None:
+                vivienda = Inmueble.objects.get(id=id)
+                if len(images) < 8:
+                for image in images:
+                    format, imgstr = image.split(';base64,')
+                    ext = format.split('/')[-1]
+                    foto_data = ContentFile(base64.b64decode(imgstr), name=vivienda.usuarioInmueble.nombre+'.' + ext)
+                    imagen_vivienda = Fotos.objects.create(
+                        fotos=foto_data,
+                        inmuebleFoto=vivienda
+                    )
+                    imagen_vivienda.save()
+                
+                response = {
+                'content': [],
+                'isOk': False,
+                'message': 'Imagenes creadas correctamente',
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            response = {
+                'content': [],
+                'isOk': False,
+                'message': str(e),
+            }
+            return Response(response, status=status.HTTP_200_OK)
+    
     def delete(self, request, id=None, format=None):
         try:
 
