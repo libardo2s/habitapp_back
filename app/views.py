@@ -439,7 +439,6 @@ class album(APIView):
             images = request.data.get('fotos')
             if id is not None:
                 vivienda = Inmueble.objects.get(id=id)
-                if len(images) < 8:
                 for image in images:
                     format, imgstr = image.split(';base64,')
                     ext = format.split('/')[-1]
@@ -451,11 +450,11 @@ class album(APIView):
                     imagen_vivienda.save()
                 
                 response = {
-                'content': [],
-                'isOk': False,
-                'message': 'Imagenes creadas correctamente',
-            }
-            return Response(response, status=status.HTTP_200_OK)
+                    'content': [],
+                    'isOk': False,
+                    'message': 'Imagenes creadas correctamente',
+                }
+                return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
             response = {
                 'content': [],
