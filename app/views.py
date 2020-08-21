@@ -454,6 +454,7 @@ class album(APIView):
             }
             return Response(response, status=status.HTTP_200_OK)
 
+
 class Solicitud(APIView):
     def get(self, request, id=None, format=None):
         if id is None:
