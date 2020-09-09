@@ -25,7 +25,7 @@ SECRET_KEY = 'acl%%9$cvk&!g4@_q%r_sd1p7x726zo)nvr7gk=$ky*+m#dibu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.166.143.130', 'ec2-54-166-143-130.compute-1.amazonaws.com']
+ALLOWED_HOSTS = ['54.166.143.130', 'ec2-54-166-143-130.compute-1.amazonaws.com', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'habitappServer.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -81,7 +81,6 @@ DATABASES = {
     }
 }
 '''
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -92,7 +91,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

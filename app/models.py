@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 
+
 # Create your models here.
 class Ciudad(models.Model):
     nombre = models.CharField('Nombre', max_length=20)
@@ -13,15 +14,15 @@ class Universidad(models.Model):
 
 
 class Usuario(models.Model):
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre = models.CharField('Nombre', max_length=20)
     apellido = models.CharField('Apellido', max_length=20)
     genero = models.CharField('Genero', max_length=2, null=True)
     edad = models.DateField(null=True)
     ciudad = models.ForeignKey(Ciudad, on_delete=models.CASCADE, null=True, default=1)
     universidad = models.ForeignKey(Universidad, on_delete=models.CASCADE, null=True, default=1)
-    #correo = models.EmailField(unique=True)
-    #descripcion = models.CharField('Descripcion', max_length=200, null=True)
+    # correo = models.EmailField(unique=True)
+    # descripcion = models.CharField('Descripcion', max_length=200, null=True)
     arrendador = models.BooleanField()
     foto = models.ImageField('Foto', upload_to='foto/usuario', null=True)
     telefono = models.CharField('Telefono', max_length=10, unique=True)
@@ -33,10 +34,13 @@ class Usuario(models.Model):
 class Inmueble(models.Model):
     usuarioInmueble = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
     ciudad = models.CharField('Ciudad', max_length=100, default='Valledupar')
+
     def get_usuario_nombre(self):
         return '%s %s' % (self.usuarioInmueble.nombre, self.usuarioInmueble.apellido)
+
     def get_usuario_telefono(self):
         return self.usuarioInmueble.telefono
+
     propietario = property(get_usuario_nombre)
     telefono_propietario = property(get_usuario_telefono)
     direccion = models.CharField('Direccion', max_length=50)
@@ -68,6 +72,8 @@ class Inmueble(models.Model):
     mujeres = models.IntegerField(null=True)
     estado = models.CharField('Estado', max_length=15, default='Disponible')
     foto = models.ImageField('Foto', upload_to='foto', null=True)
+    panoramica = models.BooleanField(default=False)
+    panoramica_imagen = models.FileField('Imagen panoramica', upload_to='panoramica', null=True, blank=True)
 
     def count_comentarios(self):
         return len(ComentarioValoracion.objects.filter(inmueble__id=self.id))
@@ -76,7 +82,7 @@ class Inmueble(models.Model):
         try:
             countComentarios = len(ComentarioValoracion.objects.filter(inmueble__id=self.id))
             sumValoraciones = ComentarioValoracion.objects.aggregate(Sum('valoracion'))
-            return sumValoraciones.get('valoracion__sum')/countComentarios
+            return sumValoraciones.get('valoracion__sum') / countComentarios
         except Exception as e:
             return 0
 
