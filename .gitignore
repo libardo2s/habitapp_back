@@ -3,3 +3,4 @@ env/
 foto/
 media/
 *.sqlite3
+.env

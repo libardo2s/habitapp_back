@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,7 +78,7 @@ WSGI_APPLICATION = 'habitappServer.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -82,19 +86,17 @@ DATABASES = {
     }
 }
 '''
-
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'habitappdb',
-        'USER': 'postgres',
-        'PASSWORD': 'habitapp2019',
-        'HOST': '127.0.0.1',
+        'NAME': env("db_name"),
+        'USER': env("db_user"),
+        'PASSWORD': env("db_password"),
+        'HOST': env("db_host"),
         'PORT': '',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -129,26 +131,21 @@ USE_THOUSAND_SEPARATOR = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-
-AWS_ACCESS_KEY_ID = 'AKIASUHL4O3KU7BRNFN3'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'habitapp-assets'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_LOCATION = 'static'
-AWS_QUERYSTRING_AUTH = False
-AWS_DEFAULT_ACL = None
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
 ]
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+
+AWS_ACCESS_KEY_ID = env("aws_access_key_id")
+AWS_SECRET_ACCESS_KEY = env("aws_secret_access_key")
+AWS_STORAGE_BUCKET_NAME = env("aws_bucket_name")
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAUlt_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-#STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
